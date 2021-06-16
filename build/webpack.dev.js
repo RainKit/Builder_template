@@ -1,7 +1,7 @@
+const { merge } = require('webpack-merge')
+const commonConfig = require('./webpack.common')
 
-
-
-module.exports = {
+ const devConfig= {
   mode: 'development',
   target: "web",
   devServer: {
@@ -10,3 +10,5 @@ module.exports = {
     port: 8086
   }
 }
+
+module.exports = merge(commonConfig, devConfig)
