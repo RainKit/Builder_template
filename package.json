@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack serve --config ./build/webpack.dev.js --env development",
+    "dev": "webpack serve --progress --config ./build/webpack.dev.js --env development",
     "build": "webpack --config ./build/webpack.prod.js --env production"
   },
   "keywords": [],

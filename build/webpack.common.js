@@ -5,14 +5,16 @@ const resolveApp = require('./paths')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const { DefinePlugin } = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+
 
 const commonConfig = {
   entry: './src/main.js',
   output: {
     path: resolveApp("./dist"),
     filename: '[name].bundle.js',
-    chunkFilename: "[name].[hash:6].chunk.js"
+    chunkFilename: "[name].[hash:6].chunk.js",
   },
   module: {
     rules: [
@@ -72,21 +74,25 @@ const commonConfig = {
     ]
   },
   plugins: [
-      new HtmlWebpackPlugin({
-        template: './public/index.html'
-      }),
-      new VueLoaderPlugin(),
-      new CopyWebpackPlugin({
-        patterns: [{
-          from: 'public',
-          globOptions: {
-            ignore: [
-              "**/index.html",
-              "**/abc.txt"
-            ]
-          }
-        }]
-      })
+    new HtmlWebpackPlugin({
+      title: 'Webpack Template',
+      template: './public/index.html'
+    }),
+    new VueLoaderPlugin(),
+    new DefinePlugin({
+      BASE_URL: '"/"'
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{
+        from: 'public',
+        to: 'public',
+        globOptions: {
+          ignore: [
+            "**/index.html",
+          ]
+        }
+      }]
+    }),
     ]
 }
 
