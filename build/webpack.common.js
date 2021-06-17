@@ -5,6 +5,7 @@ const resolveApp = require('./paths')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const commonConfig = {
   entry: './src/main.js',
@@ -74,7 +75,18 @@ const commonConfig = {
       new HtmlWebpackPlugin({
         template: './public/index.html'
       }),
-      new VueLoaderPlugin()
+      new VueLoaderPlugin(),
+      new CopyWebpackPlugin({
+        patterns: [{
+          from: 'public',
+          globOptions: {
+            ignore: [
+              "**/index.html",
+              "**/abc.txt"
+            ]
+          }
+        }]
+      })
     ]
 }
 
