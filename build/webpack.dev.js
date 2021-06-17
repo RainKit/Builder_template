@@ -4,6 +4,7 @@ const commonConfig = require('./webpack.common')
  const devConfig= {
   mode: 'development',
   target: "web",
+  devtool: 'source-map',
   devServer: {
     hot: true,
     hotOnly: true,
