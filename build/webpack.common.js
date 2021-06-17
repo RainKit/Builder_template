@@ -1,5 +1,5 @@
 const resolveApp = require('./paths')
-const { merge } = require('webpack-merge')
+// const { merge } = require('webpack-merge')
 // const prodConfig = require('./webpack.prod')
 // const devConfig = require('./webpack.dev')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -69,12 +69,6 @@ const commonConfig = {
         }
       }
     ]
-  },
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin({
-      extractComments: false
-    })],
   },
   plugins: [
       new HtmlWebpackPlugin({
