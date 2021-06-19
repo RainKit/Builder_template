@@ -19,6 +19,7 @@ const prodConfig = {
           },
           compress: {
             arguments: true,
+            dead_code: true
           }
         }
       })
