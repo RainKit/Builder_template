@@ -12,8 +12,8 @@ const commonConfig = {
   entry: './src/main.js',
   output: {
     path: resolveApp("./dist"),
-    filename: '[name].bundle.js',
-    chunkFilename: "[name].[hash:6].chunk.js",
+    filename: 'js/[name].bundle.js',
+    chunkFilename: "js/[name].[hash:6].chunk.js",
   },
   module: {
     rules: [
