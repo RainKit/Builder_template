@@ -4,7 +4,6 @@ const resolveApp = require('./paths')
 // const devConfig = require('./webpack.dev')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const TerserPlugin = require('terser-webpack-plugin')
 const { DefinePlugin } = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
@@ -76,7 +75,8 @@ const commonConfig = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Webpack Template',
-      template: './public/index.html'
+      template: './public/index.html',
+      minify: false
     }),
     new VueLoaderPlugin(),
     new DefinePlugin({
