@@ -8,6 +8,9 @@ const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
 const prodConfig = {
   mode: 'production',
   optimization: {
+    splitChunks: {
+      chunks: 'all'
+    },
     minimize: true,
     minimizer: [
       new TerserPlugin({
