@@ -1,5 +1,6 @@
 const { merge } = require('webpack-merge')
 const commonConfig = require('./webpack.common')
+const resolveApp = require('./paths')
 
  const devConfig= {
   mode: 'development',
@@ -8,7 +9,8 @@ const commonConfig = require('./webpack.common')
   devServer: {
     hot: true,
     hotOnly: true,
-    port: 8086
+    port: 8086,
+    contentBase: resolveApp("./dist")
   }
 }
 
