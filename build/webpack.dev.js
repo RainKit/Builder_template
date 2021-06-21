@@ -12,4 +12,4 @@ const commonConfig = require('./webpack.common')
   }
 }
 
-module.exports = merge(commonConfig, devConfig)
+module.exports = merge(commonConfig(false), devConfig)

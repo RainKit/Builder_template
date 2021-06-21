@@ -3,6 +3,7 @@ const { merge } = require('webpack-merge')
 const commonConfig = require('./webpack.common')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 
 const prodConfig = {
@@ -30,8 +31,12 @@ const prodConfig = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin({}),
-    new CssMinimizerWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new CssMinimizerWebpackPlugin(),
+    // new MiniCssExtractPlugin({
+    //   filename: "css/[name].[contenthash:6].css",
+    //   chunkFilename: "css/[name].[contenthash:6].chunk.css"
+    // }),
   ]
 }
-module.exports = merge(commonConfig, prodConfig)
+module.exports = merge(commonConfig(true), prodConfig)
