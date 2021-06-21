@@ -6,95 +6,102 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const { DefinePlugin } = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 
-const commonConfig = {
-  entry: './src/main.js',
-  output: {
-    path: resolveApp("./dist"),
-    filename: 'js/[name].bundle.[hash:6].js',
-    chunkFilename: "js/[name].[hash:6].chunk.js",
-  },
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
-      },
-      {
-        test: /\.vue$/,
-        use: 'vue-loader'
-      },
-      {
-        test: /\.css$/,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              importLoaders: 1
-            }
-          }, 
-          'postcss-loader'
-        ]
-      },
-      {
-        test: /\.less$/,
-        use: [
-          'style-loader', 
-          {
-            loader: 'css-loader',
-            options: { importLoaders: 2 }
-          }, 
-          'postcss-loader', 
-          'less-loader'
-        ]
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/,
-        type: 'asset',
-        generator: {
-          filename: 'img/[name].[hash:8][ext]'
+const commonConfig = (isProduction) => {
+  return  {
+    entry: './src/main.js',
+    output: {
+      path: resolveApp("./dist"),
+      filename: 'js/[name].bundle.[hash:6].js',
+      chunkFilename: "js/[name].[hash:6].chunk.js",
+    },
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          use: ['babel-loader']
         },
-        parser: {
-          dataUrlCondition: {
-            maxSize: 100 * 1024
+        {
+          test: /\.vue$/,
+          use: 'vue-loader'
+        },
+        {
+          test: /\.css$/i,
+          use: [
+            !isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+            {
+              loader: "css-loader",
+              options: {
+                importLoaders: 1
+              }
+            }, 
+            'postcss-loader'
+          ]
+        },
+        {
+          test: /\.less$/,
+          use: [
+            !isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+            {
+              loader: 'css-loader',
+              options: { importLoaders: 2 }
+            }, 
+            'postcss-loader', 
+            'less-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)$/,
+          type: 'asset',
+          generator: {
+            filename: 'img/[name].[hash:8][ext]'
+          },
+          parser: {
+            dataUrlCondition: {
+              maxSize: 100 * 1024
+            }
+          }
+        },
+        {
+          test: /\.(ttf|eot|woff2?)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'font/[name][hash:8][ext]'
           }
         }
-      },
-      {
-        test: /\.(ttf|eot|woff2?)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'font/[name][hash:8][ext]'
-        }
-      }
+      ]
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'Webpack Template',
+        template: './public/index.html'
+      }),
+      new VueLoaderPlugin(),
+      new DefinePlugin({
+        BASE_URL: '"/"'
+      }),
+      new CopyWebpackPlugin({
+        patterns: [{
+          from: 'public',
+          to: 'public',
+          globOptions: {
+            ignore: [
+              "**/index.html",
+            ]
+          }
+        }]
+      }),
+      new MiniCssExtractPlugin({
+        filename: "css/[name].[contenthash:6].css",
+        chunkFilename: "css/[name].[contenthash:6].chunk.css"
+      }),
     ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Webpack Template',
-      template: './public/index.html'
-    }),
-    new VueLoaderPlugin(),
-    new DefinePlugin({
-      BASE_URL: '"/"'
-    }),
-    new CopyWebpackPlugin({
-      patterns: [{
-        from: 'public',
-        to: 'public',
-        globOptions: {
-          ignore: [
-            "**/index.html",
-          ]
-        }
-      }]
-    }),
-    ]
+  }
+  
 }
-
 module.exports = commonConfig
 
 // module.exports = function(env) {
