@@ -12,7 +12,7 @@ const commonConfig = {
   entry: './src/main.js',
   output: {
     path: resolveApp("./dist"),
-    filename: 'js/[name].bundle.js',
+    filename: 'js/[name].bundle.[hash:6].js',
     chunkFilename: "js/[name].[hash:6].chunk.js",
   },
   module: {
@@ -75,8 +75,7 @@ const commonConfig = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Webpack Template',
-      template: './public/index.html',
-      minify: false
+      template: './public/index.html'
     }),
     new VueLoaderPlugin(),
     new DefinePlugin({
