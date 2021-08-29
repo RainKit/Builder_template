@@ -8,9 +8,7 @@ const resolveApp = require('./paths')
   devtool: 'source-map',
   devServer: {
     hot: true,
-    hotOnly: true,
     port: 8086,
-    contentBase: resolveApp("./dist")
   }
 }
 
