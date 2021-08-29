@@ -83,10 +83,6 @@ const commonConfig = (isProduction) => {
           use: [{
             loader: 'file-loader'
           }]
-          // type: 'asset/resource',
-          // generator: {
-          //   filename: 'font/[name][hash:8][ext]'
-          // }
         }
       ]
     },
